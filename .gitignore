@@ -6,6 +6,7 @@ lma.egg-info
 *.pyc
 *.ptx
 __pycache__/
+.ipynb_checkpoints/
 
 # jetbrains stuff
 .idea

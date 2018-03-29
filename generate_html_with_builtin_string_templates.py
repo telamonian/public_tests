@@ -8,7 +8,7 @@ Written for https://stackoverflow.com/q/49560083/425458
 from string import Template
 
 useBlocks = [1,1,2,0]
-valDict = {
+templateDict = {
     'link0': 'the other block is dumb',
     'link1': 'don\'t go there',
     'radio0': 'does nothing',
@@ -63,4 +63,5 @@ for block in (blocks[i] for i in useBlocks):
 htmlBody += htmlTagsClose
 
 # substitue any templated values in the html and output
-print(Template(htmlBody).substitute(valDict))
+htmlTemplate = Template(htmlBody)
+print(htmlTemplate.substitute(templateDict))
