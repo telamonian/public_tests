@@ -1,0 +1,13 @@
+~$*
+.DS_Store
+
+# python stuff
+lma.egg-info
+*.pyc
+*.ptx
+__pycache__/
+
+# jetbrains stuff
+.idea
+*.iml
+
