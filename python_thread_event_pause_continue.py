@@ -1,52 +1,59 @@
 #!/usr/bin/env python
+import os
 from threading import Thread, Event
-import time
 
-def count(pauseEvent, continueEvent):
+if os.name=='nt':
+    from msvcrt import getch
+elif os.name=='posix':
+    from getch import getch
+else:
+    raise OSError
+
+isRunning = True
+
+def count(event):
+    global isRunning
+
     i = 0
-    while True:
-        time.sleep(2)
+    while isRunning:
+        event.wait(2)
+
+        if event.isSet() and isRunning:
+            event.clear()
+            print('Pausing count at %d' % i)
+            event.wait()
+            print('resuming count')
+            event.clear()
+
         i += 1
-        
-        if listenPause.isSet():
-            pauseCount(i, continueEvent)
 
-def pauseCount(i, continueEvent):
-    print('Pausing count at %d' % i)
-    continueEvent.wait()
-    print('resuming count')
-    return
-            
-def listenPause(pauseEvent, continueEvent):
-    continueEvent.clear()
-    
+def _listener(event, msg):
+    global isRunning
+
     while True:
-        s = raw_input("Enter 'a' for pause")
-        if s=='a':
-            pauseEvent.set()
+        c = getch()
+        if c=='a':
+            event.set()
+            return
+        if c=='e':
+            event.set()
+            isRunning = False
             return
 
-def listenContinue(pauseEvent, continueEvent):
-    pauseEvent.clear()
-    
-    while True:
-        s = raw_input("Enter 'a' for continue")
-        if s=='a':
-            continueEvent.set()
-            return
-        
-def listener(pauseEvent, continueEvent):
-    while True:
-        listenPause(pauseEvent, continueEvent)
-        listenContinue(pauseEvent, continueEvent)
+def listener(event):
+    msg,nextMsg = "Enter 'a' for pause", "Enter 'a' for continue"
+
+    while isRunning:
+        _listener(event, msg=msg)
+        msg,nextMsg = nextMsg,msg
 
 def main():
     pauseEvent = Event()
-    continueEvent = Event()
-    
-    listenerThread = Thread(target=listener, args=(pauseEvent, continueEvent))
-    
+    pauseEvent.clear()
+
+    listenerThread = Thread(target=listener, args=(pauseEvent,))
+
     listenerThread.start()
-    count()
-    
+    count(pauseEvent)
+
 main()
