@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+"""Written for https://stackoverflow.com/q/49837500/425458
+"""
 import os
 from threading import Thread, Event
 
@@ -12,11 +14,9 @@ else:
 isRunning = True
 
 def count(event):
-    global isRunning
-
     i = 0
     while isRunning:
-        event.wait(2)
+        event.wait(1)
 
         if event.isSet() and isRunning:
             event.clear()
@@ -27,25 +27,17 @@ def count(event):
 
         i += 1
 
-def _listener(event, msg):
+def listener(event):
+    # in Python, need to mark globals if writing to them
     global isRunning
 
-    while True:
+    while isRunning:
         c = getch()
         if c=='a':
             event.set()
-            return
         if c=='e':
             event.set()
             isRunning = False
-            return
-
-def listener(event):
-    msg,nextMsg = "Enter 'a' for pause", "Enter 'a' for continue"
-
-    while isRunning:
-        _listener(event, msg=msg)
-        msg,nextMsg = nextMsg,msg
 
 def main():
     pauseEvent = Event()
@@ -56,4 +48,6 @@ def main():
     listenerThread.start()
     count(pauseEvent)
 
-main()
+if __name__=='__main__':
+    main()
+
