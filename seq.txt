@@ -1,0 +1,40 @@
+seq open @ 2018/02/26 23:07:51 node: \nodes\wroot.nod (wroot)
+seq call @ 2018/02/26 23:07:51 node: ttt
+retrieve BIOS data using F:\tools64\BiosConfigUtility64.exe /GetConfig:\working\bcudump.txt
+BCU is working
+seq done @ 2018/02/26 23:07:55 node:ttt
+
+seq call @ 2018/02/26 23:07:55 node: fff
+Open the firewall
+Firewall opened
+seq done @ 2018/02/26 23:07:57 node: fff
+
+seq call @ 2018/02/26 23:07:57 node: \nodes\wchkefierror.bat (wroot#9^wchkefierror)
+seq done @ 2018/02/26 23:07:57 node: \nodes\wchkefierror.bat (wroot#9^wchkefierror)
+
+seq call @ 2018/02/26 23:07:57 node: \nodes\wuutmont.bat PTEFIE (wroot#12^wuutmont)
+
+SENDING UUTMonitor.exe /timeevent:PTEFIE
+seq done @ 2018/02/26 23:07:58 node: \nodes\wuutmont.bat PTEFIE (wroot#12^wuutmont)
+
+seq call @ 2018/02/26 23:07:58 node: \nodes\wProcessInit.bat (wroot#13^wProcessInit)
+
+02/26/2018 23:07:59 : @@@@ begin_\process\ProcessInit.bat
+
+<BISCON Version=xxxx">
+x
+y
+</BISCON>
+\process\ProcessInit.bat:::Parsing branding variables from INI files...
+found \flags\custom.ini
+PRODUCTIONLOCK not defined in custom.ini
+\process\ProcessInit.bat:::Calling SETVAR.BAT generated from INI data...
+02/26/2018 23:08:04 : @@@@ end\process\ProcessInit.bat
+seq done @ 2018/02/26 23:08:04 node: \nodes\wProcessInit.bat (wroot#13^wProcessInit)
+
+seq log @ 2018/02/26 23:08:04 node: skipping wroot#14^wbios as \flags\bios_flash_wnd.trg file not exists
+
+seq call @ 2018/02/26 23:08:04 node: aaa
+
+Get SkeletonPO from \working\ubera.ini
+seq done @ 2018/02/26 23:08:04 node: aaa
