@@ -12,3 +12,8 @@ __pycache__/
 .idea
 *.iml
 
+# cython builds
+cython**/*.c
+cython**/*.so
+cython**/build
+
